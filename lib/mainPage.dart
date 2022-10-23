@@ -24,12 +24,12 @@ class _bmiApp1State extends State<bmiApp1> {
   num bmi = 0;
   String bmiResults = "Result";
   String resultEmoji = "🫀";
-  String? result;
+
   Timer? timer;
   Gender gender = Gender.male;
 
   int switchIndex = 0;
-  Color gColor1 = Color.fromARGB(255, 61, 103, 242);
+  Color gColor1 = Color.fromARGB(255, 58, 145, 232);
   Color gColor2 = Colors.pink;
   bool isCardView = false;
   var themeIcon = Icon(Icons.nights_stay);
@@ -39,10 +39,10 @@ class _bmiApp1State extends State<bmiApp1> {
   void genderColor({required Gender selectedGender}) {
     setState(() {
       if (selectedGender == Gender.male) {
-        gColor1 = Color.fromARGB(255, 61, 103, 242);
+        gColor1 = Color.fromARGB(255, 58, 145, 232);
         gColor2 = Colors.pink;
       } else {
-        gColor2 = Color.fromARGB(255, 61, 103, 242);
+        gColor2 = Color.fromARGB(255, 58, 145, 232);
         gColor1 = Colors.pink;
       }
     });
@@ -86,6 +86,7 @@ class _bmiApp1State extends State<bmiApp1> {
       actions: [
         IconButton(
             onPressed: () async {
+              Gaimon.error();
               themeChange();
               getUsertheme();
             },
@@ -115,7 +116,7 @@ class _bmiApp1State extends State<bmiApp1> {
               ),
             ),
             Positioned(
-              bottom: -26,
+              bottom: -23,
               left: 20,
               child: SfRadialGauge(
                 enableLoadingAnimation: true,
@@ -239,22 +240,24 @@ class _bmiApp1State extends State<bmiApp1> {
             Container(
                 margin: const EdgeInsets.only(top: 15, bottom: 8),
                 height: 40,
-                color: Colors.transparent,
                 child: RichText(
                   text: TextSpan(children: [
-                    const TextSpan(
+                    TextSpan(
                       text: "BMI: ",
-                      style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        color: themeValue ? Colors.white : Colors.black,
+                      ),
                     ),
                     TextSpan(
                       text: bmi.toStringAsFixed(1),
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 2, 54, 167)),
+                          color: themeValue
+                              ? Color.fromARGB(255, 255, 0, 85)
+                              : Color.fromARGB(255, 0, 81, 255)),
                     )
                   ]),
                 )),
@@ -305,7 +308,7 @@ class _bmiApp1State extends State<bmiApp1> {
                 labels: ['Male', 'Female'],
                 icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
                 activeBgColors: [
-                  [Color.fromARGB(255, 25, 75, 240)],
+                  [Color.fromARGB(255, 58, 145, 232)],
                   [Colors.pink]
                 ],
                 onToggle: (index) {
@@ -503,7 +506,7 @@ class _bmiApp1State extends State<bmiApp1> {
                   setState(() {
                     if (weight > 1) {
                       weight--;
-                      Gaimon.medium();
+                      HapticFeedback.mediumImpact();
                     }
                   });
                 },
@@ -527,7 +530,7 @@ class _bmiApp1State extends State<bmiApp1> {
                 ontap: () {
                   setState(() {
                     weight++;
-                    Gaimon.rigid();
+                    HapticFeedback.mediumImpact();
                   });
                 },
                 onlongpress: () {
@@ -587,7 +590,7 @@ class _bmiApp1State extends State<bmiApp1> {
                   setState(() {
                     if (age > 1) {
                       age--;
-                      Gaimon.medium();
+                      HapticFeedback.mediumImpact();
                     }
                   });
                 },
@@ -612,7 +615,7 @@ class _bmiApp1State extends State<bmiApp1> {
                   setState(() {
                     if (age > 0 && age < 300) {
                       age++;
-                      Gaimon.rigid();
+                      HapticFeedback.mediumImpact();
                     }
                   });
                 },
@@ -662,6 +665,9 @@ class _bmiApp1State extends State<bmiApp1> {
       onLongPress: () {
         setState(() {
           bmi = 0;
+          height = 180;
+          weight = 60;
+          age = 22;
           bmiResults = "Result";
           resultEmoji = "🫀";
           final snackBar = SnackBar(
