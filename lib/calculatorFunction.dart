@@ -39,14 +39,4 @@ class CalculatorFunction {
       return "👩‍⚕️";
     }
   }
-
-  String interpretation() {
-    if (_bmi >= 25) {
-      return 'you have a higher than normal body weight. try to exercise more';
-    } else if (_bmi > 18.5) {
-      return 'you have a normal body weight';
-    } else {
-      return 'you have a normal body weight you can eat a little bit more';
-    }
-  }
 }

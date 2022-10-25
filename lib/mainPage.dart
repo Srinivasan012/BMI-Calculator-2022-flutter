@@ -403,67 +403,69 @@ class _bmiApp1State extends State<bmiApp1> {
     );
   }
 
-  Container HeightContainer(BuildContext context, AppBar Appbar) {
-    return Container(
-      // ignore: sort_child_properties_last
-      child: Column(children: [
-        const Text(
-          "Height",
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 33, 100, 243)),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(
-              height.toString(),
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text("cm",
+  Widget HeightContainer(BuildContext context, AppBar Appbar) {
+    return Expanded(
+      child: Container(
+        // ignore: sort_child_properties_last
+        child: Column(children: [
+          const Text(
+            "Height",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 33, 100, 243)),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                height.toString(),
                 style: TextStyle(
-                  fontSize: 15,
-                ))
-          ],
+                  fontSize: 27,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text("cm",
+                  style: TextStyle(
+                    fontSize: 15,
+                  ))
+            ],
+          ),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                overlayShape: RoundSliderOverlayShape(overlayRadius: 30)),
+            child: Slider(
+                value: height.toDouble(),
+                min: 120,
+                max: 220,
+                activeColor: gColor1,
+                inactiveColor: gColor2,
+                onChanged: ((value) {
+                  setState(
+                    () {
+                      height = value.toInt();
+                      HapticFeedback.vibrate();
+                      // FeedbackType.impact;
+                    },
+                  );
+                })),
+          )
+        ]),
+        height:
+            (MediaQuery.of(context).size.height - Appbar.preferredSize.height) *
+                0.18,
+        margin: const EdgeInsets.only(left: 8, right: 8),
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: themeValue ? tColor1 : Colors.white,
         ),
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-              overlayShape: RoundSliderOverlayShape(overlayRadius: 30)),
-          child: Slider(
-              value: height.toDouble(),
-              min: 120,
-              max: 220,
-              activeColor: gColor1,
-              inactiveColor: gColor2,
-              onChanged: ((value) {
-                setState(
-                  () {
-                    height = value.toInt();
-                    HapticFeedback.vibrate();
-                    // FeedbackType.impact;
-                  },
-                );
-              })),
-        )
-      ]),
-      height:
-          (MediaQuery.of(context).size.height - Appbar.preferredSize.height) *
-              0.18,
-      margin: const EdgeInsets.only(left: 8, right: 8),
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: themeValue ? tColor1 : Colors.white,
       ),
     );
   }
@@ -620,9 +622,9 @@ class _bmiApp1State extends State<bmiApp1> {
                   });
                 },
                 onlongpress: () {
-                  timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+                  timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
                     setState(() {
-                      if (age > 0 && age < 300) {
+                      if (age > 0 && age < 150) {
                         age++;
                         HapticFeedback.vibrate();
                       }
